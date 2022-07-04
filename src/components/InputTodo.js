@@ -11,13 +11,17 @@ class InputTodo extends Component {
     })
   }
 
-  // onsubmit of the form 
+  // onsubmit of the form and validation(check for white space)
   handleSubmit = (e) => {
     e.preventDefault();
-    this.props.addTodoProps(this.state.title);
-    // this.setState({
-    //   title: ''
-    // })
+    if(this.state.title.trim()) {
+      this.props.addTodoProps(this.state.title);
+      this.setState({
+        title: '',
+    })
+    } else {
+      alert('Please write item')
+    }
   }
 
   render() {
