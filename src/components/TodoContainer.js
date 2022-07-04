@@ -23,6 +23,7 @@ class TodoContainer extends React.Component {
     ]
   }
 
+  // check completed and update state(either true or false)
   handleChange = (id) => {
     this.setState(prevState => ({
       todos: prevState.todos.map(todo => {
@@ -37,11 +38,26 @@ class TodoContainer extends React.Component {
     }));
   }
 
+  // Delete Items from the todos
+  deleteTodo = (id) => {
+    this.setState({
+      todos: [
+        ...this.state.todos.filter(todo => {
+          return todo.id !== id;
+        })
+      ]
+    })
+  }
+
   render() {
     return (
       <div>
         < Header />
-        <TodosList todos={this.state.todos} handleChangeProps={this.handleChange} />
+        <TodosList 
+          todos={this.state.todos} 
+          handleChangeProps={this.handleChange}
+          deleteTodoProps={this.deleteTodo}
+        />
       </div>
     );
   }
