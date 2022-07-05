@@ -1,46 +1,46 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 class InputTodo extends Component {
   state = {
-    title: ''
+    title: '',
   }
 
   onChange = (e) => {
     this.setState({
-      title: e.target.value
-    })
+      title: e.target.value,
+    });
   }
 
   // onsubmit of the form and validation(check for white space)
   handleSubmit = (e) => {
     e.preventDefault();
-    if(this.state.title.trim()) {
+    if (this.state.title.trim()) {
       this.props.addTodoProps(this.state.title);
       this.setState({
         title: '',
-    })
+      });
     } else {
-      alert('Please write item')
+      alert('Please write item');
     }
   }
 
   render() {
     return (
       <form className="form-container" onSubmit={this.handleSubmit}>
-        <input 
+        <input
           type="text"
-          className="input-text" 
-          placeholder="Add Todo..." 
+          className="input-text"
+          placeholder="Add Todo..."
           value={this.state.title}
           onChange={this.onChange}
         />
         <button className="input-submit">Submit</button>
       </form>
-    )
+    );
   }
 }
 
-export default InputTodo
+export default InputTodo;
 
-/* In this InputTodo component, we are using this.onChange and this.state.title 
+/* In this InputTodo component, we are using this.onChange and this.state.title
 because the method is a part of the class */

@@ -1,8 +1,8 @@
-import React from 'react'
-import TodosList from './TodosList'
-import Header from './Header'
-import InputTodo from './InputTodo'
-import { v4 as uuidv4 } from 'uuid'
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import TodosList from './TodosList';
+import Header from './Header';
+import InputTodo from './InputTodo';
 
 class TodoContainer extends React.Component {
   state = {
@@ -10,33 +10,33 @@ class TodoContainer extends React.Component {
       {
         id: uuidv4(),
         title: 'Setup development environment',
-        completed: true
+        completed: true,
       },
       {
         id: uuidv4(),
-        title: "Develop website and add content",
-        completed: false
+        title: 'Develop website and add content',
+        completed: false,
       },
       {
         id: uuidv4(),
-        title: "Deploy to live server",
-        completed: false
-      }
-    ]
+        title: 'Deploy to live server',
+        completed: false,
+      },
+    ],
   }
 
   // check completed and update state(either true or false)
   handleChange = (id) => {
-    this.setState(prevState => ({
-      todos: prevState.todos.map(todo => {
-        if(todo.id === id) {
+    this.setState((prevState) => ({
+      todos: prevState.todos.map((todo) => {
+        if (todo.id === id) {
           return {
             ...todo,
             completed: !todo.completed,
-          }
+          };
         }
         return todo;
-      })
+      }),
     }));
   }
 
@@ -44,45 +44,43 @@ class TodoContainer extends React.Component {
   deleteTodo = (id) => {
     this.setState({
       todos: [
-        ...this.state.todos.filter(todo => {
-          return todo.id !== id;
-        })
-      ]
-    })
+        ...this.state.todos.filter((todo) => todo.id !== id),
+      ],
+    });
   }
 
   // method to add todo item onsubmit of the form(inputTodo.js submit btn)
   addTodoItem = (title) => {
     const newTodo = {
       id: uuidv4(),
-      title: title,
-      completed: false
-    }
+      title,
+      completed: false,
+    };
     this.setState({
-      todos: [...this.state.todos, newTodo]
-    })
+      todos: [...this.state.todos, newTodo],
+    });
   }
 
   // method to update edited todo (setUpdate)
   setUpdate = (updatedTitle, id) => {
     this.setState({
-      todos: this.state.todos.map(todo => {
-        if(todo.id === id) {
-          todo.title = updatedTitle
+      todos: this.state.todos.map((todo) => {
+        if (todo.id === id) {
+          todo.title = updatedTitle;
         }
-        return todo
-      })
-    })
+        return todo;
+      }),
+    });
   }
 
   render() {
     return (
       <div className="container">
         <div className="inner">
-          < Header />
-          <InputTodo addTodoProps={this.addTodoItem}/>
-          <TodosList 
-            todos={this.state.todos} 
+          <Header />
+          <InputTodo addTodoProps={this.addTodoItem} />
+          <TodosList
+            todos={this.state.todos}
             handleChangeProps={this.handleChange}
             deleteTodoProps={this.deleteTodo}
             setUpdate={this.setUpdate}
@@ -93,4 +91,4 @@ class TodoContainer extends React.Component {
   }
 }
 
-export default TodoContainer
+export default TodoContainer;

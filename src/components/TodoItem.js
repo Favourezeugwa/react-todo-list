@@ -1,8 +1,7 @@
-import React from 'react'
-import styles from './TodoItem.module.css'
+import React from 'react';
+import styles from './TodoItem.module.css';
 
 class TodoItem extends React.Component {
-
   state = {
     editing: false,
   }
@@ -11,48 +10,48 @@ class TodoItem extends React.Component {
   handleEditing = () => {
     this.setState({
       editing: true,
-    })
+    });
   }
 
   // Detecting when the users press the Enter key to submit edited items
-  handleUpdatedDone = event => {
-    if(event.key === 'Enter') {
+  handleUpdatedDone = (event) => {
+    if (event.key === 'Enter') {
       this.setState({
-        editing: false
-      })
+        editing: false,
+      });
     }
   }
 
   render() {
     const completedStyle = {
-      fontStyle: "italic",
-      color: "#595959",
+      fontStyle: 'italic',
+      color: '#595959',
       opacity: 0.4,
-      textDecoration: "line-through", 
-    }
+      textDecoration: 'line-through',
+    };
 
-    const { completed, id, title} = this.props.todo
+    const { completed, id, title } = this.props.todo;
 
     // logic to dynamically hide/displlay the todos/text field
-    let viewMode = {}
-    let editMode = {}
+    const viewMode = {};
+    const editMode = {};
 
-    if(this.state.editing) {
-      viewMode.display = "none"
+    if (this.state.editing) {
+      viewMode.display = 'none';
     } else {
-      editMode.display = "none"
-    }   
-   
+      editMode.display = 'none';
+    }
+
     return (
       <li className={styles.item}>
         <div onDoubleClick={this.handleEditing} style={viewMode}>
-          <input 
-          type="checkbox"
-          className={styles.checkbox}
-          checked={completed}
-          onChange = { () => this.props.handleChangeProps(id) }
+          <input
+            type="checkbox"
+            className={styles.checkbox}
+            checked={completed}
+            onChange={() => this.props.handleChangeProps(id)}
           />
-          <button 
+          <button
             onClick={() => this.props.deleteTodoProps(id)}
           >
             Delete
@@ -61,32 +60,25 @@ class TodoItem extends React.Component {
             {title}
           </span>
         </div>
-        <input 
-          type="text" 
-          style={editMode} 
+        <input
+          type="text"
+          style={editMode}
           className={styles.textInput}
           value={title}
-          onChange={e => {
-            this.props.setUpdate(e.target.value, id)
+          onChange={(e) => {
+            this.props.setUpdate(e.target.value, id);
           }}
           onKeyDown={this.handleUpdatedDone}
         />
       </li>
-    )
+    );
   }
 }
 
-
-export default TodoItem
-
-
-
-
-
-
+export default TodoItem;
 
 /*
-  When an the input field is created, it uses the default HTML behaviour because it is being handled by the DOM. 
+  When an the input field is created, it uses the default HTML behaviour because it is being handled by the DOM.
   React doesn't work that way.Inorder to fix it, we need to make sure that the value prop of the text input is not null or undefined.
   Simply update the input field by adding value={title}. we have access to the title directly in this component.
 */
