@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class InputTodo extends Component {
-  state = {
-    title: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: '',
+    };
   }
 
   onChange = (e) => {
@@ -14,31 +18,38 @@ class InputTodo extends Component {
   // onsubmit of the form and validation(check for white space)
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.title.trim()) {
-      this.props.addTodoProps(this.state.title);
+    const { title } = this.state;
+    const { addTodoProps } = this.props;
+
+    if (title.trim()) {
+      addTodoProps(title);
       this.setState({
         title: '',
       });
-    } else {
-      alert('Please write item');
     }
   }
 
   render() {
+    const { title } = this.state;
+
     return (
       <form className="form-container" onSubmit={this.handleSubmit}>
         <input
           type="text"
           className="input-text"
           placeholder="Add Todo..."
-          value={this.state.title}
+          value={title}
           onChange={this.onChange}
         />
-        <button className="input-submit">Submit</button>
+        <button type="submit" className="input-submit">Submit</button>
       </form>
     );
   }
 }
+
+InputTodo.propTypes = {
+  addTodoProps: PropTypes.func.isRequired,
+};
 
 export default InputTodo;
 

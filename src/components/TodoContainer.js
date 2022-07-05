@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TodosList from './TodosList';
@@ -5,24 +6,27 @@ import Header from './Header';
 import InputTodo from './InputTodo';
 
 class TodoContainer extends React.Component {
-  state = {
-    todos: [
-      {
-        id: uuidv4(),
-        title: 'Setup development environment',
-        completed: true,
-      },
-      {
-        id: uuidv4(),
-        title: 'Develop website and add content',
-        completed: false,
-      },
-      {
-        id: uuidv4(),
-        title: 'Deploy to live server',
-        completed: false,
-      },
-    ],
+  constructor(props) {
+    super(props);
+    this.state = {
+      todos: [
+        {
+          id: uuidv4(),
+          title: 'Setup development environment',
+          completed: true,
+        },
+        {
+          id: uuidv4(),
+          title: 'Develop website and add content',
+          completed: false,
+        },
+        {
+          id: uuidv4(),
+          title: 'Deploy to live server',
+          completed: false,
+        },
+      ],
+    };
   }
 
   // check completed and update state(either true or false)
@@ -42,11 +46,11 @@ class TodoContainer extends React.Component {
 
   // Delete Items from the todos
   deleteTodo = (id) => {
-    this.setState({
+    this.setState((state) => ({
       todos: [
-        ...this.state.todos.filter((todo) => todo.id !== id),
+        ...state.todos.filter((todo) => todo.id !== id),
       ],
-    });
+    }));
   }
 
   // method to add todo item onsubmit of the form(inputTodo.js submit btn)
@@ -56,31 +60,32 @@ class TodoContainer extends React.Component {
       title,
       completed: false,
     };
-    this.setState({
-      todos: [...this.state.todos, newTodo],
-    });
+    this.setState((state) => ({
+      todos: [...state.todos, newTodo],
+    }));
   }
 
   // method to update edited todo (setUpdate)
   setUpdate = (updatedTitle, id) => {
-    this.setState({
-      todos: this.state.todos.map((todo) => {
+    this.setState((state) => ({
+      todos: state.todos.map((todo) => {
         if (todo.id === id) {
           todo.title = updatedTitle;
         }
         return todo;
       }),
-    });
+    }));
   }
 
   render() {
+    const { todos } = this.state;
     return (
       <div className="container">
         <div className="inner">
           <Header />
           <InputTodo addTodoProps={this.addTodoItem} />
           <TodosList
-            todos={this.state.todos}
+            todos={todos}
             handleChangeProps={this.handleChange}
             deleteTodoProps={this.deleteTodo}
             setUpdate={this.setUpdate}
