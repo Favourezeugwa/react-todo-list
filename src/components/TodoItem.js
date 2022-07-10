@@ -10,6 +10,11 @@ class TodoItem extends React.Component {
     };
   }
 
+  // a method called when the delete button is clicked
+  componentWillUnmount() {
+    console.log('cleaning up...');
+  }
+
   // to edit todo using the refernce handler
   handleEditing = () => {
     this.setState({
