@@ -1,5 +1,5 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import TodosList from './TodosList';
 import Header from './Header';
@@ -45,6 +45,25 @@ const TodoContainer = () => {
       }),
     );
   };
+
+  useEffect(() => {
+    // storing todos items
+    const temp = JSON.stringify(todos);
+    localStorage.setItem('todos', temp);
+  }, [todos]);
+
+  useEffect(() => {
+    console.log('test run');
+
+    // getting stored items
+    const temp = localStorage.getItem('todos');
+    const loadedTodos = JSON.parse(temp);
+
+    if (loadedTodos) {
+      setTodos(loadedTodos);
+    }
+  }, [setTodos]);
+
   return (
     <div className="container">
       <div className="inner">
